@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+    <title>Aquello que vi ya no puede tocarse — Lola Zoido</title>
+    <link rel="stylesheet" href="./styles.css?v=25">
+    <script crossorigin="anonymous" src="https://cdn.8thwall.com/web/aframe/8frame-1.5.0.min.js"></script>
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js"></script>
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js"></script>
+    <script crossorigin="anonymous" async data-preload-chunks="slam" src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js"></script>
+    <script src="./experience.js?v=25"></script>
+  </head>
+  <body>
+    <main class="interface">
+      <header class="identity">
+        <span class="artist">Lola Zoido</span>
+        <span class="work">
+          <span>Aquello que vi ya no puede tocarse</span>
+          <span>What I Saw Can No Longer Be Touched</span>
+        </span>
+      </header>
+      <section id="instruction-card" class="instruction" role="dialog" aria-label="How to use">
+        <p>Move slowly to find the floor.<br>Tap to place. Show your hand to grow flowers.</p>
+        <button id="instruction-close" type="button" aria-label="Close instructions">×</button>
+      </section>
+      <div class="reticle" aria-hidden="true"></div>
+      <button id="capture-button" class="capture" aria-label="Capture image"></button>
+    </main>
+
+    <a-scene
+      creature-placement
+      hand-flower
+      landing-page
+      xrextras-loading
+      xrextras-runtime-error
+      scene-lighting
+      renderer="colorManagement: true; physicallyCorrectLights: true; antialias: true; exposure: 1.22;"
+      xrweb="allowedDevices: mobile; disableWorldTracking: false;">
+      <a-assets timeout="30000">
+        <a-asset-item id="creatureModel" src="./assets/aquello-que-vi.glb"></a-asset-item>
+        <a-asset-item id="flowerModel" src="./assets/flor_01_mobile.glb?v=25"></a-asset-item>
+      </a-assets>
+
+      <a-camera id="camera" position="0 1.6 4" raycaster="objects: .placement-surface; far: 30" cursor="rayOrigin: mouse; fuse: false;">
+        <a-light type="point" intensity="0.9" color="#fff4f0" distance="6" position="0.25 0.45 0.2"></a-light>
+      </a-camera>
+
+      <a-entity id="keyLight" soft-shadow-light light="type: directional; intensity: 1.35; castShadow: true; shadowMapWidth: 1024; shadowMapHeight: 1024; shadowCameraTop: 9; shadowCameraBottom: -9; shadowCameraLeft: -9; shadowCameraRight: 9;" xrextras-attach="target: camera; offset: -5 3.8 6"></a-entity>
+      <a-light id="ambientLight" type="ambient" intensity="0.72" color="#fff7f4"></a-light>
+      <a-light id="hemiLight" type="hemisphere" intensity="1.15" color="#fff8f4" ground-color="#858895"></a-light>
+
+      <a-entity id="creature" gltf-model="#creatureModel" seamless-animation scale="2 2 2" shadow="cast: true; receive: false" visible="false"></a-entity>
+      <a-ring id="placementCursor" radius-inner="0.07" radius-outer="0.085" rotation="-90 0 0" material="color: #ffffff; opacity: 0.7; transparent: true; shader: flat" position="0 0.012 -3"></a-ring>
+      <a-box id="ground" class="placement-surface" scale="1000 0.02 1000" position="0 -0.02 0" material="shader: shadow; transparent: true; opacity: 0.72" shadow="receive: true; cast: false"></a-box>
+    </a-scene>
+  </body>
+</html>
